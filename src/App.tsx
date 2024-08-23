@@ -1,8 +1,11 @@
-import { useState } from 'react'
 import './App.css'
+import { useState } from "react";
+import { ConfigProvider, theme, Switch, Breadcrumb, Layout } from "antd";
+import { MoonOutlined, SunOutlined, BulbOutlined } from '@ant-design/icons';
+import { FloatButton } from 'antd';
+
 import Plot from 'react-plotly.js';
 
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
 const { Header, Content, Footer } = Layout;
 
@@ -14,29 +17,48 @@ const items = new Array(3)
                         label: `nav ${index + 1}`,
                     }));
 
-function App() {
+function App()
+{
+    const bg_color_light = 'rgb(255, 255, 255)'
+    const bg_color_dark = 'rgba(20, 20, 20, 0.7)'
+
     const [count, setCount] = useState(0)
+
+    const { defaultAlgorithm, darkAlgorithm } = theme;
+    const [ isDarkMode, setIsDarkMode ] = useState(true);
+
     const font = {
-        color: 'white',
+        color:  isDarkMode ? 'white' : 'black',
         size: 13,
         opacity: 1,
         family: "Arial, Helvetica, sans-serif"
     }
 
-    const {
+    const
+    {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
+    const handleClick = (value: boolean) =>
+    {
+        setIsDarkMode(value);
+    };
+
     return (
         <>
+          <ConfigProvider
+            theme={
+            {
+                algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
+            }}
+          >
             <Layout
                 style={
-                    {
-                        height: '100vh',
-                        margin: '0px',
-                        padding: '0px',
-                    }
-                }
+                {
+                    height: '100vh',
+                    margin: '0px',
+                    padding: '0px',
+                }}
             >
                 <Header
                     style={{
@@ -48,6 +70,11 @@ function App() {
                         alignItems: 'center',
                     }}
                 >
+                    {/* <Switch
+                        onChange={handleClick}
+                        checkedChildren="{<MoonOutlined />}"
+                        unCheckedChildren="{<SunOutlined />}"
+                    /> */}
                     <div className="demo-logo" />
                     {/* <Menu
                         theme="dark"
@@ -56,14 +83,24 @@ function App() {
                         items={items}
                         style={{ flex: 1, minWidth: 0 }}
                     /> */}
-                </Header>
-                <Content 
-                    style={
+                    {/* <Menu
+                        theme="dark"
+                        mode="horizontal"
+                        // defaultSelectedKeys={['2']}
+                        // items={items}
+                        style={
                         {
-                            // padding: '0 48px',
-                            height: '100vh'
-                        }
-                    }
+                            flex: 1,
+                            minWidth: 0
+                        }}
+                    /> */}
+                </Header>
+                <Content
+                    style={
+                    {
+                        // padding: '0 48px',
+                        height: '100vh'
+                    }}
                 >
                     <Breadcrumb 
                         style={
@@ -75,23 +112,34 @@ function App() {
                         <Breadcrumb.Item>List</Breadcrumb.Item>
                         <Breadcrumb.Item>App</Breadcrumb.Item>
                     </Breadcrumb>
+                    <FloatButton.Group
+                        trigger="hover"
+                        // type="primary"
+                        // style={{ insetInlineEnd: 5 }}
+                        icon={<BulbOutlined />}
+                    >
+                        <FloatButton onClick={() => handleClick(false)} icon={<SunOutlined />} />
+                        <FloatButton onClick={() => handleClick(true)} icon={<MoonOutlined />} />
+                    </FloatButton.Group>
                     <div
                         style={
                         {
                             padding: 24,
                             // minHeight: 380,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
+                            // background: colorBgContainer,
+                            // borderRadius: borderRadiusLG,
                         }}
                     >
 
                         <div>
+                            {isDarkMode}
                             <Plot
                                 style={
                                 {
                                     height: '300px'
                                 }}
-                                data={[
+                                data={
+                                [
                                     {
                                         x: [1, 2, 3],
                                         y: [2, 6, 3],
@@ -105,8 +153,8 @@ function App() {
                                 {
                                     hovermode: 'closest',
                                     font: font,
-                                    paper_bgcolor: 'rgba(20, 20, 20, 0.7)',
-                                    plot_bgcolor: 'rgba(20, 20, 20, 0.7)',
+                                    paper_bgcolor: isDarkMode ? bg_color_dark : bg_color_light,
+                                    plot_bgcolor: isDarkMode ? bg_color_dark : bg_color_light,
                                     margin:
                                     {
                                         t: 0,
@@ -138,10 +186,11 @@ function App() {
                         </div> */}
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
+                <Footer style={{ textAlign: 'left' }}>
+                    ©{new Date().getFullYear()} DCOR, GOCC
                 </Footer>
             </Layout>
+          </ConfigProvider>
         </>
     )
 }
