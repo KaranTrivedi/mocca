@@ -1,10 +1,11 @@
 import './App.css'
 import { useState } from "react";
-import { ConfigProvider, theme, Switch, Breadcrumb, Layout } from "antd";
-import { MoonOutlined, SunOutlined, BulbOutlined } from '@ant-design/icons';
-import { FloatButton } from 'antd';
 
-import Plot from 'react-plotly.js';
+import { ConfigProvider, theme, Switch, Breadcrumb, Layout, Flex, Menu } from "antd";
+import { FloatButton } from 'antd';
+import { MoonOutlined, SunOutlined, BulbOutlined } from '@ant-design/icons';
+
+import ImpactStatus from './ui/ImpactStatus/ImpactStatus';
 
 
 const { Header, Content, Footer } = Layout;
@@ -19,30 +20,24 @@ const items = new Array(3)
 
 function App()
 {
-    const bg_color_light = 'rgb(255, 255, 255)'
-    const bg_color_dark = 'rgba(20, 20, 20, 0.7)'
-
-    const [count, setCount] = useState(0)
 
     const { defaultAlgorithm, darkAlgorithm } = theme;
     const [ isDarkMode, setIsDarkMode ] = useState(true);
 
-    const font = {
-        color:  isDarkMode ? 'white' : 'black',
-        size: 13,
-        opacity: 1,
-        family: "Arial, Helvetica, sans-serif"
-    }
-
-    const
-    {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
+    // const
+    // {
+    //     token: { colorBgContainer, borderRadiusLG },
+    // } = theme.useToken();
 
     const handleClick = (value: boolean) =>
     {
         setIsDarkMode(value);
     };
+
+    const handleSwitch = () =>
+    {
+        setIsDarkMode((previousValue) => !previousValue);
+    }
 
     return (
         <>
@@ -70,42 +65,43 @@ function App()
                         alignItems: 'center',
                     }}
                 >
-                    {/* <Switch
-                        onChange={handleClick}
-                        checkedChildren="{<MoonOutlined />}"
-                        unCheckedChildren="{<SunOutlined />}"
-                    /> */}
-                    <div className="demo-logo" />
-                    {/* <Menu
-                        theme="dark"
-                        mode="horizontal"
-                        defaultSelectedKeys={['2']}
-                        items={items}
-                        style={{ flex: 1, minWidth: 0 }}
-                    /> */}
-                    {/* <Menu
-                        theme="dark"
-                        mode="horizontal"
-                        // defaultSelectedKeys={['2']}
-                        // items={items}
+                    <Flex
                         style={
                         {
-                            flex: 1,
-                            minWidth: 0
+                            width: "100%"
                         }}
-                    /> */}
+                        align="center"
+                        justify="space-between"
+                    >
+                        <Menu
+                            theme="dark"
+                            mode="horizontal"
+                            defaultSelectedKeys={['2']}
+                            items={items}
+                            style={{ flex: 1, minWidth: 0 }}
+                        />
+                        <Switch
+                            style = {
+                            {
+                                position: "relative",
+                                float: "right"
+                            }}
+                            onChange={handleSwitch}
+                            checkedChildren={<MoonOutlined />}
+                            unCheckedChildren={<SunOutlined />}
+                        />
+                    </Flex>
                 </Header>
                 <Content
                     style={
                     {
-                        // padding: '0 48px',
                         height: '100vh'
                     }}
                 >
                     <Breadcrumb 
                         style={
                         {
-                            margin: '16px'
+                            margin: '15px',
                         }}
                     >
                         <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -124,61 +120,62 @@ function App()
                     <div
                         style={
                         {
-                            padding: 24,
+                            width: "100%",
+                            padding: "0 15px",
+                            // padding: 24,
                             // minHeight: 380,
                             // background: colorBgContainer,
                             // borderRadius: borderRadiusLG,
                         }}
                     >
 
-                        <div>
-                            {isDarkMode}
-                            <Plot
+                        {/* Chart componment frame .. */}
+                        <Flex
+                            style={
+                            {
+                                width: "100%",
+                                // margin: "0 15px",
+                            }
+                            }
+                        >
+                            <div
                                 style={
                                 {
-                                    height: '300px'
+
+                                    padding: "4px",
+                                    margin: "4px",
+                                    width: "33%"
                                 }}
-                                data={
-                                [
-                                    {
-                                        x: [1, 2, 3],
-                                        y: [2, 6, 3],
-                                        type: 'scatter',
-                                        mode: 'lines+markers',
-                                        marker: { color: 'red' },
-                                    },
-                                    { type: 'bar', x: [1, 2, 3], y: [2, 5, 3] },
-                                ]}
-                                layout={
+                            >
+                                <ImpactStatus
+                                    isDarkMode={isDarkMode}
+                                />
+                            </div>
+                            <div
+                                style={
                                 {
-                                    hovermode: 'closest',
-                                    font: font,
-                                    paper_bgcolor: isDarkMode ? bg_color_dark : bg_color_light,
-                                    plot_bgcolor: isDarkMode ? bg_color_dark : bg_color_light,
-                                    margin:
-                                    {
-                                        t: 0,
-                                        b: 40,
-                                        l: 30,
-                                        r: 0
-                                    },
-                                    height: 300,
-                                    xaxis:
-                                    {
-                                        zeroline: true
-                                    },
-                                    yaxis:
-                                    {
-                                        zeroline: true,
-                                        fixedrange: true
-                                    },
+                                    padding: "4px",
+                                    margin: "4px",
+                                    width: "33%"
                                 }}
-                                config={
+                                >
+                                <ImpactStatus
+                                    isDarkMode={isDarkMode}
+                                />
+                            </div>
+                            <div
+                                style={
                                 {
-                                    responsive: true
+                                    padding: "4px",
+                                    margin: "4px",
+                                    width: "33%"
                                 }}
-                            />
-                        </div>
+                            >
+                                <ImpactStatus
+                                    isDarkMode={isDarkMode}
+                                />
+                            </div>
+                        </Flex>
                         {/* <div className="card">
                             <button onClick={() => setCount((count) => count + 1)}>
                                 count is {count}
