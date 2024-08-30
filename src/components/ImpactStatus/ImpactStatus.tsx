@@ -4,9 +4,14 @@ import  {
     bg_color_dark,
     bg_color_light
 } from '../../data/themeValues.tsx'
+import { useSearchParams } from 'react-router-dom';
 
-function ImpactStatus({ isDarkMode }: {isDarkMode: boolean})
+// function ImpactStatus({ isDarkMode }: {isDarkMode: boolean})
+function ImpactStatus()
 {
+    const [searchParams] = useSearchParams();
+    const isDarkMode: boolean = searchParams.get('darkmode') === 'true';
+
     const font = {
         color: isDarkMode ? 'white' : 'black',
         size: 13,

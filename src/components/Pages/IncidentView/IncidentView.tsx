@@ -1,15 +1,9 @@
 import { Flex } from "antd"
-import ImpactStatus from "../ImpactStatus/ImpactStatus"
+import ImpactStatus from "../../ImpactStatus/ImpactStatus"
 
-function IncidentView({ isDarkMode }: {isDarkMode: boolean})
+// function IncidentView({ isDarkMode }: {isDarkMode: boolean})
+function IncidentView()
 {
-    // const font = {
-    //     color: isDarkMode ? 'white' : 'black',
-    //     size: 13,
-    //     opacity: 1,
-    //     family: "Arial, Helvetica, sans-serif"
-    // }
-
     return (
         <div
             style={
@@ -22,7 +16,6 @@ function IncidentView({ isDarkMode }: {isDarkMode: boolean})
                 style={
                 {
                     width: "100%",
-                    // margin: "0 15px",
                 }
                 }
             >
@@ -35,9 +28,7 @@ function IncidentView({ isDarkMode }: {isDarkMode: boolean})
                         width: "33%"
                     }}
                 >
-                    <ImpactStatus
-                        isDarkMode={isDarkMode}
-                    />
+                    <ImpactStatus/>
                 </div>
                 <div
                     style={
@@ -47,9 +38,7 @@ function IncidentView({ isDarkMode }: {isDarkMode: boolean})
                         width: "33%"
                     }}
                     >
-                    <ImpactStatus
-                        isDarkMode={isDarkMode}
-                    />
+                    <ImpactStatus/>
                 </div>
                 <div
                     style={
@@ -59,9 +48,7 @@ function IncidentView({ isDarkMode }: {isDarkMode: boolean})
                         width: "33%"
                     }}
                 >
-                    <ImpactStatus
-                        isDarkMode={isDarkMode}
-                    />
+                    <ImpactStatus/>
                 </div>
             </Flex>
         </div>
