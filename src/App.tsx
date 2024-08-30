@@ -1,25 +1,38 @@
 import './App.css'
 import { useState } from "react";
 
-import { ConfigProvider, theme, Switch, Breadcrumb, Layout, Flex, Menu } from "antd";
+import { ConfigProvider, theme, Switch, Layout, Flex, Menu, MenuProps } from "antd";
 import { FloatButton } from 'antd';
-import { MoonOutlined, SunOutlined, BulbOutlined } from '@ant-design/icons';
+import { MoonOutlined, SunOutlined, BulbOutlined, TableOutlined } from '@ant-design/icons';
 
+import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
+import { header_color_dark, header_color_light, } from './data/themeValues';
+
+import IncidentView from './ui/IncidentView/IncidentView';
 import ImpactStatus from './ui/ImpactStatus/ImpactStatus';
-
+import MenuItem from 'antd/es/menu/MenuItem';
 
 const { Header, Content, Footer } = Layout;
 
-const items = new Array(3)
-                    .fill(null)
-                    .map((_, index) => (
-                    {
-                        key: String(index + 1),
-                        label: `nav ${index + 1}`,
-                    }));
+const items = [
+    {
+        label: 'Incident View',
+        key: 'incidentview',
+        icon: <TableOutlined />
+    },
+    {
+        label: 'Appcode View',
+        key: 'appcodeview',
+        icon: <TableOutlined />
+    }
+]
 
 function App()
 {
+
+    // Nav Variables.
+    // const navigate = useNavigate()
+    const [current, setCurrent] = useState('incidentview');
 
     const { defaultAlgorithm, darkAlgorithm } = theme;
     const [ isDarkMode, setIsDarkMode ] = useState(true);
@@ -39,6 +52,29 @@ function App()
         setIsDarkMode((previousValue) => !previousValue);
     }
 
+    const onNav: MenuProps['onClick'] = (e) =>
+    {
+        console.log('click ', e);
+        setCurrent(e.key);
+        // navigate(e.key)
+    };
+
+    let router = createBrowserRouter(
+    [
+        {
+            path: '/',
+            element: <IncidentView isDarkMode={isDarkMode}/>
+        },
+        {
+            path: 'incidentview',
+            element: <IncidentView isDarkMode={isDarkMode}/>
+        },
+        {
+            path: 'appcodeview',
+            element: <ImpactStatus isDarkMode={isDarkMode}/>
+        }
+    ])
+
     return (
         <>
           <ConfigProvider
@@ -57,6 +93,7 @@ function App()
             >
                 <Header
                     style={{
+                        backgroundColor: isDarkMode ? header_color_dark : header_color_light,
                         position: 'sticky',
                         top: 0,
                         zIndex: 1,
@@ -74,12 +111,28 @@ function App()
                         justify="space-between"
                     >
                         <Menu
-                            theme="dark"
+                            style={{
+                                backgroundColor: isDarkMode ? header_color_dark : header_color_light,
+                                flex: 1, minWidth: 0
+                            }}
                             mode="horizontal"
-                            defaultSelectedKeys={['2']}
-                            items={items}
-                            style={{ flex: 1, minWidth: 0 }}
-                        />
+                            selectedKeys={[current]}
+                            onClick={onNav}
+                            // defaultSelectedKeys={['incidentview']}
+                        >
+                            {/* items={items}
+                             */}
+                            {
+                                items.map(el =>
+                                <MenuItem
+                                    key={el.key}
+                                >
+                                    {el.label}
+                                </MenuItem>)
+                            }                            
+
+                        </Menu>
+                        {/* <Divider></Divider> */}
                         <Switch
                             style = {
                             {
@@ -95,19 +148,26 @@ function App()
                 <Content
                     style={
                     {
-                        height: '100vh'
+                        height: '100vh',
+                        width: "100%",
+                        padding: "0 15px",
                     }}
                 >
-                    <Breadcrumb 
+                    {/* <Breadcrumb
                         style={
                         {
-                            margin: '15px',
+                            margin: '15px 0',
                         }}
                     >
                         <Breadcrumb.Item>Home</Breadcrumb.Item>
                         <Breadcrumb.Item>List</Breadcrumb.Item>
                         <Breadcrumb.Item>App</Breadcrumb.Item>
-                    </Breadcrumb>
+                    </Breadcrumb> */}
+
+                    {/* <IncidentView></IncidentView> */}
+                    <RouterProvider router={router}></RouterProvider>
+
+                    {/* Float buttons on the bottom right of the page. */}
                     <FloatButton.Group
                         trigger="hover"
                         // type="primary"
@@ -117,71 +177,6 @@ function App()
                         <FloatButton onClick={() => handleClick(false)} icon={<SunOutlined />} />
                         <FloatButton onClick={() => handleClick(true)} icon={<MoonOutlined />} />
                     </FloatButton.Group>
-                    <div
-                        style={
-                        {
-                            width: "100%",
-                            padding: "0 15px",
-                            // padding: 24,
-                            // minHeight: 380,
-                            // background: colorBgContainer,
-                            // borderRadius: borderRadiusLG,
-                        }}
-                    >
-
-                        {/* Chart componment frame .. */}
-                        <Flex
-                            style={
-                            {
-                                width: "100%",
-                                // margin: "0 15px",
-                            }
-                            }
-                        >
-                            <div
-                                style={
-                                {
-
-                                    padding: "4px",
-                                    margin: "4px",
-                                    width: "33%"
-                                }}
-                            >
-                                <ImpactStatus
-                                    isDarkMode={isDarkMode}
-                                />
-                            </div>
-                            <div
-                                style={
-                                {
-                                    padding: "4px",
-                                    margin: "4px",
-                                    width: "33%"
-                                }}
-                                >
-                                <ImpactStatus
-                                    isDarkMode={isDarkMode}
-                                />
-                            </div>
-                            <div
-                                style={
-                                {
-                                    padding: "4px",
-                                    margin: "4px",
-                                    width: "33%"
-                                }}
-                            >
-                                <ImpactStatus
-                                    isDarkMode={isDarkMode}
-                                />
-                            </div>
-                        </Flex>
-                        {/* <div className="card">
-                            <button onClick={() => setCount((count) => count + 1)}>
-                                count is {count}
-                            </button>
-                        </div> */}
-                    </div>
                 </Content>
                 <Footer style={{ textAlign: 'left' }}>
                     ©{new Date().getFullYear()} DCOR, GOCC
