@@ -1,5 +1,7 @@
 import { Flex } from "antd"
 import ImpactStatus from "../../ImpactStatus/ImpactStatus"
+import BusinessCriticality from "../../BusinessCriticality/BusinessCriticality"
+import LineOfBusiness from "../../LOB/LineOfBusiness"
 
 // function IncidentView({ isDarkMode }: {isDarkMode: boolean})
 function IncidentView()
@@ -16,15 +18,15 @@ function IncidentView()
                 style={
                 {
                     width: "100%",
-                }
-                }
+                    padding: "15px 0"
+                }}
             >
                 <div
                     style={
                     {
 
-                        padding: "4px",
-                        margin: "4px",
+                        // padding: "4px",
+                        // margin: "4px",
                         width: "33%"
                     }}
                 >
@@ -33,22 +35,22 @@ function IncidentView()
                 <div
                     style={
                     {
-                        padding: "4px",
-                        margin: "4px",
+                        // padding: "4px",
+                        // margin: "4px",
                         width: "33%"
                     }}
-                    >
-                    <ImpactStatus/>
+                >
+                        <LineOfBusiness/>
                 </div>
                 <div
                     style={
                     {
-                        padding: "4px",
-                        margin: "4px",
+                        // padding: "4px",
+                        // margin: "4px",
                         width: "33%"
                     }}
                 >
-                    <ImpactStatus/>
+                    <BusinessCriticality/>
                 </div>
             </Flex>
         </div>

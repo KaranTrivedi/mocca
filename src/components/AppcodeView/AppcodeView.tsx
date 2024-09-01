@@ -1,10 +1,11 @@
+
 function AppcodeView()
 {
     return (
         <div>
-            <h1>
-                Test
-            </h1>
+            <h2>
+                Appcode View.
+            </h2>
         </div>
     )
 }

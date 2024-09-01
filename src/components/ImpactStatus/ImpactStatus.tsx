@@ -1,70 +1,97 @@
-import Plot from 'react-plotly.js';
-
-import  {
+import {
     bg_color_dark,
-    bg_color_light
+    bg_color_light,
 } from '../../data/themeValues.tsx'
 import { useSearchParams } from 'react-router-dom';
 
 // function ImpactStatus({ isDarkMode }: {isDarkMode: boolean})
 function ImpactStatus()
 {
+
     const [searchParams] = useSearchParams();
     const isDarkMode: boolean = searchParams.get('darkmode') === 'true';
 
-    const font = {
-        color: isDarkMode ? 'white' : 'black',
-        size: 13,
-        opacity: 1,
-        family: "Arial, Helvetica, sans-serif"
-    }
-
+    // Horizontal tabs indicating counts and statuses of apps, with total.
     return (
-        <Plot
-            style={
-            {
-                height: '300px'
+        <div
+            style={{
+                height: "310px",
+                padding: "4px",
+                margin: "4px",
+                borderRadius: "8px",
+                border: isDarkMode ? "solid 1px rgba(255, 255, 255, 0.12)" : 'solid 1px rgba(0, 0, 0, 0.1)',
+                backgroundColor: isDarkMode ? bg_color_dark : bg_color_light,
+                color: 'black',
             }}
-            data={
-            [
-                {
-                    x: [1, 2, 3],
-                    y: [2, 6, 3],
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    marker: { color: 'red' },
-                },
-                { type: 'bar', x: [1, 2, 3], y: [2, 5, 3] },
-            ]}
-            layout={
-            {
-                hovermode: 'closest',
-                font: font,
-                paper_bgcolor: isDarkMode ? bg_color_dark : bg_color_light,
-                plot_bgcolor: isDarkMode ? bg_color_dark : bg_color_light,
-                margin:
-                {
-                    t: 0,
-                    b: 40,
-                    l: 30,
-                    r: 0
-                },
-                height: 300,
-                xaxis:
-                {
-                    zeroline: true
-                },
-                yaxis:
-                {
-                    zeroline: true,
-                    fixedrange: true
-                },
-            }}
-            config={
-            {
-                responsive: true
-            }}
-        />
+        >
+            <div
+                style={{
+                    fontSize: 13,
+                    fontFamily: "Arial, Helvetica, sans-serif",
+                    // borderRadius: "8px",
+                    // border: isDarkMode ? "solid 1px rgba(255, 255, 255, 0.12)" : 'solid 1px rgba(0, 0, 0, 0.1)',
+                }}
+            >
+                <div style={{ padding: "10px" }}>
+                    <div
+                        style={{
+                            backgroundColor: "#FFDD7E",
+                            padding: "18px",
+                            marginBottom: "5px",
+                            borderRadius: "3px",
+                        }}
+                    >
+                        Potentially Impacted
+                        <span style={{ float: "right", fontWeight: "bold" }}>0</span>
+                    </div>
+                    <div
+                        style={{
+                            backgroundColor: "#ADD8E6",
+                            padding: "18px",
+                            marginBottom: "5px",
+                            borderRadius: "3px",
+                        }}
+                    >
+                        Not Impacted
+                        <span style={{ float: "right", fontWeight: "bold" }}>0</span>
+                    </div>
+                    <div
+                        style={{
+                            backgroundColor: "#FF7E79",
+                            padding: "18px",
+                            marginBottom: "5px",
+                            borderRadius: "3px",
+                        }}
+                    >
+                        Impacted
+                        <span style={{ float: "right", fontWeight: "bold" }}>1</span>
+                    </div>
+                    <div
+                        style={{
+                            backgroundColor: "#A7DCA7",
+                            padding: "18px",
+                            marginBottom: "5px",
+                            borderRadius: "3px",
+                        }}
+                    >
+                        Recovered
+                        <span style={{ float: "right", fontWeight: "bold" }}>379</span>
+                    </div>
+                    <div
+                        style={{
+                            fontWeight: "bold",
+                            marginTop: "15px",
+                            paddingTop: "15px",
+                            borderTop: isDarkMode ? "solid 1px rgba(255, 255, 255, 0.12)" : 'solid 1px rgba(0, 0, 0, 0.1)',
+                            color: isDarkMode ? 'white' : 'black',
+                        }}
+                    >
+                        Total Applications
+                        <span style={{ float: "right", fontWeight: "bold" }}>380</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 export default ImpactStatus
