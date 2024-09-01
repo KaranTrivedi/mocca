@@ -13,6 +13,9 @@ const grid_line_light = 'rgba(0,0,0,0.1)'
 const header_color_light = '#e6f4ff'
 const header_color_dark = '#001529'
 
+const border_dark = "solid 1px rgba(255, 255, 255, 0.12)"
+const border_light = "solid 1px rgba(0, 0, 0, 0.1)"
+
 export {
     bg_color_light,
     bg_color_dark,
@@ -20,5 +23,7 @@ export {
     header_color_light,
     plot_bgcolor,
     grid_line_dark,
-    grid_line_light
+    grid_line_light,
+    border_dark,
+    border_light
 };

@@ -1,13 +1,10 @@
 import Plot from 'react-plotly.js';
-import { useSearchParams } from 'react-router-dom';
+
 import { bg_color_dark, bg_color_light, plot_bgcolor } from '../../data/themeValues';
 import Frame from '../Frame';
 
-function BusinessCriticality()
+function BusinessCriticality({ isDarkMode = false }: {isDarkMode: boolean})
 {
-    const [searchParams] = useSearchParams();
-    const isDarkMode: boolean = searchParams.get('darkmode') === 'true';
-
     const font = {
         color: isDarkMode ? 'white' : 'black',
         size: 13,

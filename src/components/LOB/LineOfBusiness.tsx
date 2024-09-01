@@ -7,14 +7,11 @@ import  {
     grid_line_dark,
     grid_line_light
 } from '../../data/themeValues.tsx'
-import { useSearchParams } from 'react-router-dom';
 import Frame from '../Frame.tsx';
 
 // function ImpactStatus({ isDarkMode }: {isDarkMode: boolean})
-function LineOfBusiness()
+function LineOfBusiness({ isDarkMode = false }: {isDarkMode: boolean})
 {
-    const [searchParams] = useSearchParams();
-    const isDarkMode: boolean = searchParams.get('darkmode') === 'true';
 
     const font = {
         color: isDarkMode ? 'white' : 'black',

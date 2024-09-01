@@ -4,7 +4,7 @@ import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom'
 
 import ReportLayout from './components/Pages/ReportLayout.tsx'
 import IncidentView from './components/Pages/IncidentView/IncidentView.tsx';
-import AppcodeView from './components/AppcodeView/AppcodeView.tsx';
+import AppcodeView from './components/Pages/AppcodeView/AppcodeView.tsx';
 
 let router = createBrowserRouter(
 [

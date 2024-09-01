@@ -1,26 +1,27 @@
 import {
     bg_color_dark,
     bg_color_light,
+    border_dark,
+    border_light,
 } from '../../data/themeValues.tsx'
-import { useSearchParams } from 'react-router-dom';
+
 import Frame from '../Frame.tsx';
 
-// function ImpactStatus({ isDarkMode }: {isDarkMode: boolean})
-function ImpactStatus()
+function ImpactStatus({ isDarkMode = false }: {isDarkMode: boolean})
+// function ImpactStatus()
 {
-
-    const [searchParams] = useSearchParams();
-    const isDarkMode: boolean = searchParams.get('darkmode') === 'true';
+    // const [searchParams] = useSearchParams();
+    // const isDarkMode: boolean = searchParams.get('darkmode') === 'true';
 
     // Horizontal tabs indicating counts and statuses of apps, with total.
     return (
         <div
             style={{
-                height: "350px",
+                height: "348px",
                 padding: "4px",
                 margin: "4px",
                 borderRadius: "8px",
-                border: isDarkMode ? "solid 1px rgba(255, 255, 255, 0.12)" : 'solid 1px rgba(0, 0, 0, 0.1)',
+                border: isDarkMode ? border_dark : border_light,
                 backgroundColor: isDarkMode ? bg_color_dark : bg_color_light,
                 color: 'black',
             }}
