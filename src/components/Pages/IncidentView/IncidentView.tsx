@@ -15,18 +15,16 @@ function IncidentView()
             }}
         >
             <Flex
+                justify="space-between"
                 style={
                 {
-                    width: "100%",
+                    // width: "100%",
                     padding: "15px 0"
                 }}
             >
                 <div
                     style={
                     {
-
-                        // padding: "4px",
-                        // margin: "4px",
                         width: "33%"
                     }}
                 >
@@ -35,8 +33,6 @@ function IncidentView()
                 <div
                     style={
                     {
-                        // padding: "4px",
-                        // margin: "4px",
                         width: "33%"
                     }}
                 >
@@ -45,14 +41,13 @@ function IncidentView()
                 <div
                     style={
                     {
-                        // padding: "4px",
-                        // margin: "4px",
                         width: "33%"
                     }}
                 >
                     <BusinessCriticality/>
                 </div>
             </Flex>
+            <img src="src/assets/test.bmp" alt="" />
         </div>
     )
 }

@@ -1,17 +1,19 @@
-import { useState } from "react";
-import { ConfigProvider, theme, Switch, Layout, Flex, Menu, MenuProps, Divider } from "antd";
+import { useRef } from "react";
+import { ConfigProvider, theme, Switch, Layout, Flex, Tooltip } from "antd";
 import { FloatButton } from 'antd';
-import { MoonOutlined, SunOutlined, BulbOutlined, TableOutlined } from '@ant-design/icons';
+import { Outlet, useSearchParams } from "react-router-dom";
+import { MoonOutlined, SunOutlined, BulbOutlined, FilePdfOutlined } from '@ant-design/icons';
 
 import { header_color_dark, header_color_light } from "../../data/themeValues";
-import { Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import MainNav from "../MainNav";
+
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const { Header, Content, Footer } = Layout;
 
 function ReportLayout()
 {
-
     const [searchParams, setSearchParams] = useSearchParams();
     const isDarkMode: boolean = searchParams.get('darkmode') === 'true';
 
@@ -33,6 +35,59 @@ function ReportLayout()
         })
     }
 
+    const componentRef = useRef<HTMLElement | null>(null);
+
+    const handleDownloadPDF = () =>
+    {
+        const input = componentRef.current as HTMLDivElement | null;
+
+        if (!input)
+        {
+            console.error("Component to print is not available");
+            return;
+        }
+
+        // Using class name seems to not always work. Need to add this little workaround.
+        // Select elements to exclude
+        const elementsToExclude = input.querySelectorAll<HTMLElement>(".exclude-from-pdf") as NodeListOf<HTMLElement>;;
+
+        // Store the elements temporarily
+        const removedElements: { parent: Node; element: HTMLElement }[] = [];
+        elementsToExclude.forEach(element =>
+        {
+            if (element.parentNode)
+            {
+                removedElements.push(
+                {
+                    parent: element.parentNode,
+                    element: element,
+                });
+                element.parentNode.removeChild(element);
+            }
+        });
+        html2canvas(input).then((canvas) =>
+        {
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF("p", "mm", "a4");
+
+            // The correct addImage function parameters
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+            pdf.save("download.pdf");
+            removedElements.forEach(({ parent, element }) => 
+            {
+                parent.appendChild(element);
+            });
+        });
+    }
+    // const handlePrint = useReactToPrint(
+    // {
+    //     content: () => componentRef.current,
+    // });
+
     return (
     <ConfigProvider
         theme={
@@ -40,6 +95,7 @@ function ReportLayout()
             algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
         }}
     >
+    <div ref={componentRef as React.RefObject<HTMLDivElement>}>
     <Layout
         style={
         {
@@ -69,6 +125,7 @@ function ReportLayout()
             >
                 <MainNav/>
                 <Switch
+                    className="exclude-from-pdf"
                     onChange={handleSwitch}
                     checkedChildren={<MoonOutlined />}
                     unCheckedChildren={<SunOutlined />}
@@ -83,29 +140,47 @@ function ReportLayout()
                 padding: "0 15px",
             }}
         >
+
             <Outlet/>
-            {/* Float buttons on the bottom right of the page. */}
-            <FloatButton.Group
-                trigger="hover"
-                // type="primary"
-                // style={{ insetInlineEnd: 5 }}
-                icon={<BulbOutlined />}
+            <div
+                className="exclude-from-pdf"
             >
-                <FloatButton
-                    onClick={() => handleClick(false)}
-                    icon={<SunOutlined />}
-                />
-                <FloatButton
-                    onClick={() => handleClick(true)}
-                    icon={<MoonOutlined />}
-                />
-            </FloatButton.Group>
+                <FloatButton.Group
+                    trigger="hover"
+                    // type="primary"
+                    // style={{ insetInlineEnd: 5 }}
+                    icon={<BulbOutlined />}
+                >
+                    <Tooltip placement="left" title="Download Page as PDF.">
+                        <FloatButton
+                            onClick={handleDownloadPDF}
+                            icon={<FilePdfOutlined />}
+                        />
+                    </Tooltip>
+                    {/* <Tooltip placement="left" title="Print Page.">
+                        <FloatButton
+                            onClick={handlePrint}
+                            icon={<PrinterOutlined />}
+                        />
+                    </Tooltip> */}
+                    <FloatButton
+                        onClick={() => handleClick(false)}
+                        icon={<SunOutlined />}
+                    />
+                    <FloatButton
+                        onClick={() => handleClick(true)}
+                        icon={<MoonOutlined />}
+                    />
+                </FloatButton.Group>
+            </div>
+            {/* Float buttons on the bottom right of the page. */}
         </Content>
         <Footer style={{ textAlign: 'left' }}>
             ©{new Date().getFullYear()} DCOR, GOCC
         </Footer>
     </Layout>
-      </ConfigProvider>
+    </div>
+    </ConfigProvider>
     )
 }
 

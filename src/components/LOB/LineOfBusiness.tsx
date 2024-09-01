@@ -8,6 +8,7 @@ import  {
     grid_line_light
 } from '../../data/themeValues.tsx'
 import { useSearchParams } from 'react-router-dom';
+import Frame from '../Frame.tsx';
 
 // function ImpactStatus({ isDarkMode }: {isDarkMode: boolean})
 function LineOfBusiness()
@@ -33,6 +34,10 @@ function LineOfBusiness()
                 backgroundColor: isDarkMode ? bg_color_dark : bg_color_light,
             }}
         >
+            <Frame
+                title="Line Of Business"
+                isDarkMode={isDarkMode}
+            />
             <Plot
                 style={
                 {
@@ -59,7 +64,7 @@ function LineOfBusiness()
                     plot_bgcolor: isDarkMode ? plot_bgcolor : bg_color_light,
                     margin:
                     {
-                        t: 0,
+                        t: 10,
                         b: 40,
                         l: 30,
                         r: 0

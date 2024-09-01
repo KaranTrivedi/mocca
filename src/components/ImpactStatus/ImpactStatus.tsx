@@ -3,6 +3,7 @@ import {
     bg_color_light,
 } from '../../data/themeValues.tsx'
 import { useSearchParams } from 'react-router-dom';
+import Frame from '../Frame.tsx';
 
 // function ImpactStatus({ isDarkMode }: {isDarkMode: boolean})
 function ImpactStatus()
@@ -15,7 +16,7 @@ function ImpactStatus()
     return (
         <div
             style={{
-                height: "310px",
+                height: "350px",
                 padding: "4px",
                 margin: "4px",
                 borderRadius: "8px",
@@ -24,6 +25,10 @@ function ImpactStatus()
                 color: 'black',
             }}
         >
+            <Frame
+                title="Impact Status"
+                isDarkMode={isDarkMode}
+            />
             <div
                 style={{
                     fontSize: 13,
@@ -36,9 +41,11 @@ function ImpactStatus()
                     <div
                         style={{
                             backgroundColor: "#FFDD7E",
+                            border: "#FFDD7E",
                             padding: "18px",
                             marginBottom: "5px",
-                            borderRadius: "3px",
+                            borderRadius: "8px",
+                            
                         }}
                     >
                         Potentially Impacted
@@ -49,7 +56,7 @@ function ImpactStatus()
                             backgroundColor: "#ADD8E6",
                             padding: "18px",
                             marginBottom: "5px",
-                            borderRadius: "3px",
+                            borderRadius: "8px",
                         }}
                     >
                         Not Impacted
@@ -60,7 +67,7 @@ function ImpactStatus()
                             backgroundColor: "#FF7E79",
                             padding: "18px",
                             marginBottom: "5px",
-                            borderRadius: "3px",
+                            borderRadius: "8px",
                         }}
                     >
                         Impacted
@@ -71,7 +78,7 @@ function ImpactStatus()
                             backgroundColor: "#A7DCA7",
                             padding: "18px",
                             marginBottom: "5px",
-                            borderRadius: "3px",
+                            borderRadius: "8px",
                         }}
                     >
                         Recovered
@@ -81,13 +88,21 @@ function ImpactStatus()
                         style={{
                             fontWeight: "bold",
                             marginTop: "15px",
+                            marginLeft: "10px",
                             paddingTop: "15px",
                             borderTop: isDarkMode ? "solid 1px rgba(255, 255, 255, 0.12)" : 'solid 1px rgba(0, 0, 0, 0.1)',
                             color: isDarkMode ? 'white' : 'black',
                         }}
                     >
                         Total Applications
-                        <span style={{ float: "right", fontWeight: "bold" }}>380</span>
+                        <span style={
+                        {
+                            float: "right",
+                            fontWeight: "bold",
+                            marginRight: "15px"
+                        }}>
+                            380
+                        </span>
                     </div>
                 </div>
             </div>

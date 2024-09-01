@@ -1,6 +1,7 @@
 import Plot from 'react-plotly.js';
 import { useSearchParams } from 'react-router-dom';
 import { bg_color_dark, bg_color_light, plot_bgcolor } from '../../data/themeValues';
+import Frame from '../Frame';
 
 function BusinessCriticality()
 {
@@ -24,9 +25,10 @@ function BusinessCriticality()
             backgroundColor: isDarkMode ? bg_color_dark : bg_color_light,
         }}
     >
-        {/* <h3>
-            Title
-        </h3> */}
+        <Frame
+            title="Business Criticality"
+            isDarkMode={isDarkMode}
+        />
         <Plot
             style={
             {
@@ -59,9 +61,9 @@ function BusinessCriticality()
                 plot_bgcolor: isDarkMode ? plot_bgcolor : bg_color_light,
                 margin:
                 {
-                    t: 0,
-                    b: 40,
-                    l: 30,
+                    t: 15,
+                    b: 15,
+                    l: 0,
                     r: 0
                 },
                 height: 300,
