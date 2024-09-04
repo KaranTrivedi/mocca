@@ -19,7 +19,7 @@ function ImpactStatus({ isDarkMode = false }: {isDarkMode: boolean})
             style={{
                 height: "348px",
                 padding: "4px",
-                margin: "4px",
+                // margin: "4px",
                 borderRadius: "8px",
                 border: isDarkMode ? border_dark : border_light,
                 backgroundColor: isDarkMode ? bg_color_dark : bg_color_light,

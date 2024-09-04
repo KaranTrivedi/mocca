@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, MenuProps } from "antd";
-import { TableOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, TableOutlined } from '@ant-design/icons';
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { header_color_dark, header_color_light } from "../data/themeValues";
@@ -15,7 +15,7 @@ const items = [
     {
         label: 'Appcode View',
         key: 'appcodeview',
-        icon: <TableOutlined />
+        icon: <AppstoreOutlined />
     }
 ]
 

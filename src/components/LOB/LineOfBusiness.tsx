@@ -25,7 +25,7 @@ function LineOfBusiness({ isDarkMode = false }: {isDarkMode: boolean})
         <div
             style={{
                 padding: "4px",
-                margin: "4px",
+                // margin: "4px",
                 borderRadius: "8px",
                 border: isDarkMode ? "solid 1px rgba(255, 255, 255, 0.12)" : 'solid 1px rgba(0, 0, 0, 0.1)',
                 backgroundColor: isDarkMode ? bg_color_dark : bg_color_light,

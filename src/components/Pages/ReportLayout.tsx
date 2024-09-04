@@ -99,9 +99,11 @@ function ReportLayout()
     <Layout
         style={
         {
+            // height: '100%',
             height: '100vh',
             margin: '0px',
             padding: '0px',
+            overflow: "scroll",
         }}
     >
         <Header
@@ -135,7 +137,8 @@ function ReportLayout()
         <Content
             style={
             {
-                height: '100vh',
+                // height: '100%',
+                // height: '100vh',
                 width: "100%",
                 padding: "0 15px",
             }}
@@ -147,8 +150,6 @@ function ReportLayout()
             >
                 <FloatButton.Group
                     trigger="hover"
-                    // type="primary"
-                    // style={{ insetInlineEnd: 5 }}
                     icon={<BulbOutlined />}
                 >
                     <Tooltip placement="left" title="Download Page as PDF.">
@@ -173,10 +174,9 @@ function ReportLayout()
                     />
                 </FloatButton.Group>
             </div>
-            {/* Float buttons on the bottom right of the page. */}
         </Content>
         <Footer style={{ textAlign: 'left' }}>
-            ©{new Date().getFullYear()} DCOR, GOCC
+            ©{new Date().getFullYear()} DCOR, MIMT
         </Footer>
     </Layout>
     </div>
